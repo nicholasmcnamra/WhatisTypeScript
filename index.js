@@ -3,7 +3,6 @@
 var form = document.querySelector('#defineform');
 form.onsubmit = function () {
     var formData = new FormData(form);
-    console.log(formData);
     var text = formData.get('defineword');
     console.log(text);
     fetch("https://api.dictionaryapi.dev/api/v2/entries/en/".concat(text))
@@ -20,11 +19,15 @@ form.onsubmit = function () {
 };
 function appendData(data) {
     var mainContainer = document.getElementById("quotes");
-    var p = document.createElement("p");
-    var w = document.createElement("p");
+    var w = document.getElementById("word");
+    var d = document.getElementById("definition");
+    var phonetic = document.getElementById("phonetic");
     w.innerHTML = data[0].word;
-    p.innerHTML = data[0].meanings[0].definitions[0].definition;
+    d.innerHTML = data[0].meanings[2].definitions[0].definition;
+    phonetic.innerHTML = data[0].phonetics[1].text;
     console.log(data[0]);
-    mainContainer.appendChild(w);
-    mainContainer.appendChild(p);
+    // let p = document.createElement("p");
+    // let w = document.createElement("p");
+    // mainContainer.appendChild(w);
+    // mainContainer.appendChild(p);
 }
