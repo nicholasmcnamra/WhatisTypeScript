@@ -23,26 +23,87 @@ form.onsubmit = () => {
   return false; // prevent reload
 };
 
-
-
 function appendData(data) {
     let mainContainer = document.getElementById("quotes")!;
 
-    let w = document.getElementById("word")!;
-    let d = document.getElementById("definition")!;
-    let phonetic = document.getElementById("phonetic");
-
-    w.innerHTML = data[0].word;
-    d.innerHTML = data[0].meanings[2].definitions[0].definition;
-    phonetic.innerHTML = data[0].phonetics[1].text;
-
+    let word = document.getElementById("word")!;
+    let definition = document.getElementById("definition")!;
+    let phonetics = document.getElementById("phonetic");
+    let synonyms = document.getElementById("synonyms");
+    // let antonyms = document.getElementById("antonyms");
+    let audio = document.getElementById("audio")as HTMLAudioElement;
+    let audioSource = document.getElementById("audioSource") as HTMLSourceElement;
 
     console.log(data[0]);
 
 
-    // let p = document.createElement("p");
-    // let w = document.createElement("p");
-    // mainContainer.appendChild(w);
-    // mainContainer.appendChild(p);
+    //word**************************
+    word.innerHTML = data[0].word;
+
+    //phonetics *************
+    let phoneticFound = false;
+  
+    for (let i = 0; i < data[0].phonetics.length; i++) {
+    if (data[0].phonetics[i].text) {
+      phonetics.innerHTML = data[0].phonetics[i].text;
+      phoneticFound = true;
+      break;
+    }
+  }
+  if (!phoneticFound) {
+    phonetics.innerHTML = "N/A";
+  }
+
+  //definitions******************
+  let definitionFound = false;
+
+for (let i = 0; i < data[0].meanings.length; i++){
+  if(data[0].meanings[i].definitions[0].definition){
+    definition.innerHTML = data[0].meanings[i].definitions[0].definition;
+    definitionFound = true;
+    break;
+  }
+}
+if (!definitionFound) {
+  definition.innerHTML = "N/A";
+}
+
+
+//synonyms*************************
+synonyms.innerHTML = "";
+
+ for(let i = 0; i < data[0].meanings.length; i++){
+  if(data[0].meanings[i].synonyms[0]){
+    let synonymsThing = document.createElement("li");
+    synonymsThing.textContent = data[0].meanings[i].synonyms;
+    synonyms.appendChild(synonymsThing);
+  }
+ }
+
+//antonyms*************************
+// antonyms.innerHTML = "";
+// if (data[0].meanings[0].antonyms != null) {
+
+// for (let i = 0; i < data[0].meanings.length; i++) {
+//     if (data[0].meanings[i].anytonyms[0]) {
+//         let antonymsThing = document.createElement("li");
+//         antonymsThing.textContent = data[0].meanings[i].antonyms;
+//         antonyms.appendChild(antonymsThing);
+//     }
+// }}
+
+ let audioFound = false;
+  
+ for (let i = 0; i < data[0].phonetics.length; i++) {
+ if (data[0].phonetics[i].audio) {
+   audioSource.src = data[0].phonetics[i].audio;
+   audio.load();
+   audioFound = true;
+   break;
+ }
+}
+if (!audioFound) {
+ audio.innerHTML = "N/A";
+}
 }
 
