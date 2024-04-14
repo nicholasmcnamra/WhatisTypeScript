@@ -23,7 +23,7 @@ function appendData(data) {
     var definition = document.getElementById("definition");
     var phonetics = document.getElementById("phonetic");
     var synonyms = document.getElementById("synonyms");
-    // let antonyms = document.getElementById("antonyms");
+    var antonyms = document.getElementById("antonyms");
     var audio = document.getElementById("audio");
     var audioSource = document.getElementById("audioSource");
     console.log(data[0]);
@@ -55,23 +55,28 @@ function appendData(data) {
     }
     //synonyms*************************
     synonyms.innerHTML = "";
-    for (var i = 0; i < data[0].meanings.length; i++) {
-        if (data[0].meanings[i].synonyms[0]) {
-            var synonymsThing = document.createElement("li");
-            synonymsThing.textContent = data[0].meanings[i].synonyms;
-            synonyms.appendChild(synonymsThing);
+    if (data[0].meanings[0].synonyms[0]) {
+        synonyms.innerText = "Synonyms";
+        for (var i = 0; i < data[0].meanings.length; i++) {
+            if (data[0].meanings[i].synonyms[0]) {
+                var synonymsThing = document.createElement("li");
+                synonymsThing.textContent = data[0].meanings[i].synonyms;
+                synonyms.appendChild(synonymsThing);
+            }
         }
     }
     //antonyms*************************
-    // antonyms.innerHTML = "";
-    // if (data[0].meanings[0].antonyms != null) {
-    // for (let i = 0; i < data[0].meanings.length; i++) {
-    //     if (data[0].meanings[i].anytonyms[0]) {
-    //         let antonymsThing = document.createElement("li");
-    //         antonymsThing.textContent = data[0].meanings[i].antonyms;
-    //         antonyms.appendChild(antonymsThing);
-    //     }
-    // }}
+    antonyms.innerHTML = "";
+    if (data[0].meanings[0].antonyms[0]) {
+        antonyms.innerText = "Antonyms";
+        for (var i = 0; i < data[0].meanings.length; i++) {
+            if (data[0].meanings[i].anytonyms[0]) {
+                var antonymsThing = document.createElement("li");
+                antonymsThing.textContent = data[0].meanings[i].antonyms;
+                antonyms.appendChild(antonymsThing);
+            }
+        }
+    }
     var audioFound = false;
     for (var i = 0; i < data[0].phonetics.length; i++) {
         if (data[0].phonetics[i].audio) {

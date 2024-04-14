@@ -30,7 +30,7 @@ function appendData(data) {
     let definition = document.getElementById("definition")!;
     let phonetics = document.getElementById("phonetic");
     let synonyms = document.getElementById("synonyms");
-    // let antonyms = document.getElementById("antonyms");
+    let antonyms = document.getElementById("antonyms");
     let audio = document.getElementById("audio")as HTMLAudioElement;
     let audioSource = document.getElementById("audioSource") as HTMLSourceElement;
 
@@ -72,25 +72,30 @@ if (!definitionFound) {
 //synonyms*************************
 synonyms.innerHTML = "";
 
+if (data[0].meanings[0].synonyms[0]) {
+  synonyms.innerText = "Synonyms";
+
  for(let i = 0; i < data[0].meanings.length; i++){
   if(data[0].meanings[i].synonyms[0]){
     let synonymsThing = document.createElement("li");
     synonymsThing.textContent = data[0].meanings[i].synonyms;
     synonyms.appendChild(synonymsThing);
   }
- }
+ }}
 
 //antonyms*************************
-// antonyms.innerHTML = "";
-// if (data[0].meanings[0].antonyms != null) {
+antonyms.innerHTML = "";
 
-// for (let i = 0; i < data[0].meanings.length; i++) {
-//     if (data[0].meanings[i].anytonyms[0]) {
-//         let antonymsThing = document.createElement("li");
-//         antonymsThing.textContent = data[0].meanings[i].antonyms;
-//         antonyms.appendChild(antonymsThing);
-//     }
-// }}
+if (data[0].meanings[0].antonyms[0]) {
+antonyms.innerText = "Antonyms";
+
+for (let i = 0; i < data[0].meanings.length; i++) {
+    if (data[0].meanings[i].anytonyms[0]) {
+        let antonymsThing = document.createElement("li");
+        antonymsThing.textContent = data[0].meanings[i].antonyms;
+        antonyms.appendChild(antonymsThing);
+    }
+}}
 
  let audioFound = false;
   
